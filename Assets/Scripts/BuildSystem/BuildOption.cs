@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class BuildOption : MonoBehaviour
 {
-    private enum RoomType
+    public enum RoomType
     {
         Power,
         Food,
         Slave,
-
-
     }
+    public RoomType roomType;
 }
