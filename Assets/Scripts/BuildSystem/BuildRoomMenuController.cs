@@ -5,19 +5,18 @@ using UnityEngine;
 
 public class BuildRoomMenuController : MonoBehaviour
 {
-    public GameObject OptionPrefab;
+    public BuildOption OptionPrefab;
     public GameObject Content;
-    public SlotID CurrentSlotID;
     private void OnEnable()
     {
-        SpawnOptionPrefab();
+        //SpawnOption();
     }
     private void OnDisable()
     {
 
         DestroyOption();
     }
-    public void SpawnOptionPrefab()
+    public void SpawnOption()
     {
         //baseic room
 
@@ -27,9 +26,47 @@ public class BuildRoomMenuController : MonoBehaviour
         switch (WorldType)
         {
             case WorldType.FutureCity:
+                switch (TentacleType)
+                {
+                    case TentacleType.MagicExperimentCreature:
+                        break;
+                    case TentacleType.MagicWildCreature: 
+                        break;
+                    case TentacleType.NormalCreature:
+                        break;
+                    case TentacleType.ScienceExperimentCreature:
+                        break;
+                }
+                break;
+            case WorldType.Magic:
+                switch (TentacleType)
+                {
+                    case TentacleType.MagicExperimentCreature:
+                        break;
+                    case TentacleType.MagicWildCreature:
+                        break;
+                    case TentacleType.NormalCreature:
+                        break;
+                    case TentacleType.ScienceExperimentCreature:
+                        break;
+                }
+                break;
+            case WorldType.ModernCity:
+                switch (TentacleType)
+                {
+                    case TentacleType.MagicExperimentCreature:
+                        break;
+                    case TentacleType.MagicWildCreature:
+                        break;
+                    case TentacleType.NormalCreature:
+                        break;
+                    case TentacleType.ScienceExperimentCreature:
+                        break;
+                }
                 break;
 
         }
+        
     }
 
     public void DestroyOption()

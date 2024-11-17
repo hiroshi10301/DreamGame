@@ -24,9 +24,9 @@ public class BuildRoomSlot : MonoBehaviour
         }
             
     }
+    public void BuildRoomHere(RoomType roomType)
+    {
+        
+    }
 }
-public class SlotID
-{
-    public int Layer;
-    public int Slot;
-}
+
