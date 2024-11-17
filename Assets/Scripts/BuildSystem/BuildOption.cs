@@ -11,4 +11,8 @@ public class BuildOption : MonoBehaviour
         Slave,
     }
     public RoomType roomType;
+    public void BuildRoom()
+    {
+        MessageManager.SendMessage(MessageType.BuildRoom, roomType);
+    }
 }

@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildRoom : MonoBehaviour
+public class BuildRoomSlot : MonoBehaviour
 {
-    public GameObject RoomPrefab;
 
+    public SlotID ID;
     private void OnEnable()
     {
         MessageManager.AddListener(MessageType.ClickObject, OpenBuildUI);
@@ -20,8 +20,13 @@ public class BuildRoom : MonoBehaviour
         var ClickedObject = message.Data as GameObject;
         if (ClickedObject == this)
         {
-            MessageManager.SendMessage(MessageType.OpenBuildRoomUI, this);
+            MessageManager.SendMessage(MessageType.ClickBuildSlot, ID);
         }
             
     }
+}
+public class SlotID
+{
+    public int Layer;
+    public int Slot;
 }
