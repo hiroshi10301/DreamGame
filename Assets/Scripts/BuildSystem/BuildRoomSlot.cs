@@ -26,7 +26,9 @@ public class BuildRoomSlot : MonoBehaviour
     }
     public void BuildRoomHere(RoomType roomType)
     {
-        
+        var TargetObject = GameLogicController.Instance.EmptyRoom;
+        Instantiate(TargetObject, new Vector3(0, 8, 0), Quaternion.identity, transform);
+        TargetObject.type = roomType;
     }
 }
 

@@ -18,6 +18,7 @@ public enum TentacleType
 }
 public enum RoomType
 {
+    Empty,
     ElecticPower,
     MagicPower,
     Food,
@@ -30,6 +31,7 @@ public class SlotID
 }
 public class GameLogicController :MonoBehaviour
 {
+    public Room EmptyRoom;
     public BuildRoomMenuController BuildRoomMenuController;
     public List<LayerController> LayerControllers;
     public SlotID CurrentSlotID;
