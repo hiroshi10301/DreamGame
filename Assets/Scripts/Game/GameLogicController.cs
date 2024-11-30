@@ -24,6 +24,7 @@ public enum RoomType
     Food,
     Slave,
 }
+[System.Serializable]
 public class SlotID
 {
     public int Layer;

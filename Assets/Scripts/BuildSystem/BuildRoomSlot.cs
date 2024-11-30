@@ -18,9 +18,10 @@ public class BuildRoomSlot : MonoBehaviour
     public void OpenBuildUI(IMessage message)
     {
         var ClickedObject = message.Data as GameObject;
-        if (ClickedObject == this)
+        if (ClickedObject == this.gameObject)
         {
             MessageManager.SendMessage(MessageType.ClickBuildSlot, ID);
+            Debug.Log("Click Slot");
         }
             
     }
