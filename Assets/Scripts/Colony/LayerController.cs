@@ -25,26 +25,24 @@ public class LayerController : MonoBehaviour
     }
     public void SpawnBuildingSlot()
     {
-        SpawnObjectsOnCorridor();
-    }
-
-    private void SpawnObjectsOnCorridor()
-    {
-        // 獲取 Plane 的尺寸
+        BoxCollider boxCollider = SlotPrefab.GetComponent<BoxCollider>();
+        // 動態獲取物件寬度
+        float objectWidth = boxCollider.size.x * SlotPrefab.transform.localScale.x;
+        // 檢查plane是否有meshRender、獲取 Plane 的尺寸
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
         if (meshRenderer == null)
         {
             Debug.LogError("This script must be attached to a Plane with a MeshRenderer!");
             return;
         }
-        
+
         Vector3 planeSize = meshRenderer.bounds.size;
         float planeLength = planeSize.z; // 走廊的長度
         float planeWidth = planeSize.x;  // 走廊的寬度
 
         // 計算起始位置（兩側的 x 軸）
-        float leftSideX = -planeWidth / 2; // 左側的 x 坐標
-        float rightSideX = planeWidth / 2; // 右側的 x 坐標
+        float leftSideX = -planeWidth / 2 + objectWidth / 2; // 左側的 x 坐標，在寬度一半的、x在plane中央左邊位置，然後再往右移動prefab一半寬度，這樣prefab就會在走廊內貼期的剛剛好
+        float rightSideX = planeWidth / 2 - objectWidth / 2; // 右側的 x 坐標
 
         // 隨機生成數量
         int leftSideObjects = Random.Range(minObjectsPerSide, maxObjectsPerSide + 1);
@@ -55,7 +53,6 @@ public class LayerController : MonoBehaviour
         // 生成右側物件
         GenerateObjectsOnSide(rightSideX, planeLength, rightSideObjects, "Right", currentSlotID);
     }
-
     private int GenerateObjectsOnSide(float sideX, float length, int objectCount, string sideName, int startingSlotID)
     {
         // 計算物件之間的間距
@@ -71,8 +68,8 @@ public class LayerController : MonoBehaviour
             Vector3 spawnPosition = new Vector3(sideX, 0, zPosition);
 
             // 生成物件
-            GameObject newObject = Instantiate(SlotPrefab,Context.transform.position + spawnPosition, Quaternion.identity,Context.transform);
-            newObject.name = $"{sideName}_Object_{currentSlotID}";
+            GameObject newSlotObject = Instantiate(SlotPrefab,Context.transform.position + spawnPosition, Quaternion.identity,Context.transform);
+            newSlotObject.name = $"{sideName}_Object_{currentSlotID}";
 
             // 分配 SlotID
             SlotID slotID = new SlotID
@@ -82,10 +79,14 @@ public class LayerController : MonoBehaviour
             };
 
             // 設置到生成的物件上
-            newObject.GetComponent<BuildRoomSlot>().ID = slotID;
+            var SlotComponent = newSlotObject.GetComponent<BuildRoomSlot>();
+            SlotComponent.ID = slotID;
+            BuildRoomSlots.Add(SlotComponent);
 
             // 自增 Slot 編號
             currentSlotID++;
+
+            
         }
 
         return currentSlotID;
