@@ -11,6 +11,7 @@ public class LayerController : MonoBehaviour
     public int maxObjectsPerSide;
     public GameObject SlotPrefab;
     public GameObject Context;
+    public GameObject ContextPrefab;
     private void OnEnable()
     {
         
@@ -25,6 +26,11 @@ public class LayerController : MonoBehaviour
     }
     public void SpawnBuildingSlot()
     {
+        var ConTextPos = new Vector3(transform.position.x,transform.position.y+1,transform.position.z);
+        Context = Instantiate(ContextPrefab, ConTextPos,Quaternion.identity);
+        Context.name = "Layer" + LayerID + "Context";
+        //生成Context，並將之後的slot生成在Context之下，避免被layer的scale變化給拉伸變形
+
         BoxCollider boxCollider = SlotPrefab.GetComponent<BoxCollider>();
         // 動態獲取物件寬度
         float objectWidth = boxCollider.size.x * SlotPrefab.transform.localScale.x;

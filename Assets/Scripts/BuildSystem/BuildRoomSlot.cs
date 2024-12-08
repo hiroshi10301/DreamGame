@@ -2,11 +2,17 @@ using com.ootii.Messages;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum SlotSide 
+{
+    left,
+    right
+}
 
 public class BuildRoomSlot : MonoBehaviour
 {
-
+    public SlotSide Side;
     public SlotID ID;
+    public Room Room;
     private void OnEnable()
     {
         MessageManager.AddListener(MessageType.ClickObject, OpenBuildUI);
@@ -28,8 +34,22 @@ public class BuildRoomSlot : MonoBehaviour
     public void BuildRoomHere(RoomType roomType)
     {
         var TargetObject = GameLogicController.Instance.EmptyRoom;
-        Instantiate(TargetObject, new Vector3(0, 8, 0), Quaternion.identity, transform);
-        TargetObject.type = roomType;
+        if(Room == null)
+        {
+            Room = Instantiate(TargetObject, transform);
+            Room.type = roomType;
+        }
+        else
+        {
+            ChangeRoom(roomType);
+        }
+
+    }
+    public void ChangeRoom(RoomType roomType)
+    {
+        Destroy(Room);
+        Room = Instantiate(GameLogicController.Instance.EmptyRoom, transform);
+        Room.type = roomType;
     }
 }
 
